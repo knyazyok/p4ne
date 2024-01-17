@@ -1,16 +1,24 @@
 from pysnmp.hlapi import *
 
-snmp_name = ObjectIdentity('SNMPv2-MIB','sysDescr',0)
-snmp_interfaces = ObjectIdentity('1.3.6.1.2.1.2.2.1.2')
+IP="10.31.70.209"
+PORT=161
+DESCR_MIB="sysDescr"
+IFACES_MIB="1.3.6.1.2.1.2.2.1.2"
 
-result_1 = getCmd(SnmpEngine(), CommunityData('public', mpModel=0), UdpTransportTarget(('10.31.70.209', 161)), ContextData(), ObjectType(snmp_name))
+snmp_name = ObjectIdentity('SNMPv2-MIB',DESCR_MIB,0)
+snmp_interfaces = ObjectIdentity(IFACES_MIB)
 
-result_2 = nextCmd(SnmpEngine(), CommunityData('public', mpModel=0), UdpTransportTarget(('10.31.70.209', 161)), ContextData(), ObjectType(snmp_interfaces),lexicographicMode=False)
+descr = getCmd(SnmpEngine(), CommunityData('public', mpModel=0), UdpTransportTarget((IP, PORT)), ContextData(), ObjectType(snmp_name))
+ifaces = nextCmd(SnmpEngine(), CommunityData('public', mpModel=0), UdpTransportTarget((IP, PORT)), ContextData(), ObjectType(snmp_interfaces),lexicographicMode=False)
 
-for i in result_1:
+print("Description:")
+for i in descr:
     for j in i[3]:
         print(j)
 
-for i in result_2:
+print("")
+
+print("Interfaces:")
+for i in ifaces:
     for j in i[3]:
         print(j)
