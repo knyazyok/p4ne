@@ -5,10 +5,11 @@ PORT=161
 DESCR_MIB="sysDescr"
 IFACES_MIB="1.3.6.1.2.1.2.2.1.2"
 COMMUNITY="public"
+HUMAN_DATA_ELEMENT=3
 
 def snmp_human_data(snmp_data):
     for i in snmp_data:
-        for j in i[3]:
+        for j in i[HUMAN_DATA_ELEMENT]:
             print(j)
 
 snmp_name = ObjectIdentity('SNMPv2-MIB',DESCR_MIB,0)
