@@ -5,7 +5,7 @@ class IPv4RandomNetwork(IPv4Network):
     def __init__(self,):
         IPv4Network.__init__(self,(random.randint(0x0b000000,0xdf000000),random.randint(8,24)),False)
     def key_value(self):
-        return int(str(int(self.netmask))+str(int(self.network_address)))
+        return int(self.netmask) * 2**32 * int(self.network_address)
     def regular(self):
         if self.is_global():
             return True
