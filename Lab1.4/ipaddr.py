@@ -13,13 +13,13 @@ class IPv4RandomNetwork(IPv4Network):
             return False
 
 def sort_key(i):
-    return i.key_value
+    return i.key_value()
 
 nets=[]
-for i in range(0,100):
+for i in range(0,50):
     net = IPv4RandomNetwork()
     if net.regular:
         nets.append(net)
 
-for i in sorted(nets):
+for i in sorted(nets,key=sort_key):
     print(i)
