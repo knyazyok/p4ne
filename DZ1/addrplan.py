@@ -28,5 +28,14 @@ networks=[]
 for i in all_address:
     networks.append(i.network)
 
+wb = Workbook()
+ws = wb.active
+ws.title = "Address Plan"
+ws.append(["Network","Mask"])
 for i in sorted(set(networks),key=sort_key):
-    print(str(i.network_address)+" "+str(i.netmask))
+    ws.append(str(i.network_address),str(i.netmask))
+ft = Font(bold=True)
+for row in ws["A1:B1"]:
+    for cell in row:
+        cell.font = ft
+wb.save(LOG_PATH+"\\addrplan.xlsx")
