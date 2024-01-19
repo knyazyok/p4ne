@@ -15,6 +15,8 @@ class IPv4RandomNetwork(IPv4Network):
 def sort_key(i):
     return i.key_value()
 
+random.seed()
+
 nets=[]
 for i in range(0,50):
     net = IPv4RandomNetwork()
