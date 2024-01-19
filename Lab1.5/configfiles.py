@@ -8,7 +8,7 @@ for i in glob.glob("C:\\Users\\utkinia\\Documents\\Python\\config_files\\*.log")
             string=string.replace("ip address","").strip()
             elements=string.split(" ")
             for i in elements:
-                if not i[0] in "0123456789" or i == "":
+                if not i[0].isnumeric():
                     elements.remove(i)
             ipaddr = " ".join(elements)
             ipaddr = ipaddr.strip()
