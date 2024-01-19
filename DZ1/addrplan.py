@@ -15,18 +15,13 @@ def str_to_ip(ipstr):
 def sort_key(i):
     return int(i.network_address) + (int(i.netmask) * 2**32)
 
-
-all_address=[]
+networks=[]
 for i in glob.glob(LOG_PATH+"\\*.log"):
     f = open(i)
     for j in f:
         a = str_to_ip(j)
         if a != None:
-            all_address.append(a)
-
-networks=[]
-for i in all_address:
-    networks.append(i.network)
+            networks.append(a.network)
 
 wb = openpyxl.Workbook()
 ws = wb.active
