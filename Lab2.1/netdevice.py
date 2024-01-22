@@ -28,10 +28,18 @@ s = session.recv(BUF_SIZE).decode()
 
 session.close()
 
-print(s)
+#print(s)
+iface_list = [["Name","Input Packets","Input Bytes","Output Packets","Output Bytes"]]
 out = s.split("\n")
 for i in out:
     if i[0] != " " and not re.search("show interfaces",i) and re.search("is",i):
-        print(i.split()[0])
-    elif re.search("packets input",i) or re.search("packets output",i):
-        print (i.split()[0]+" "+i.split()[3])
+        name = i.split()[0]
+    elif re.search("packets input",i):
+        ipackets = i.split()[0]
+        ibytes = i.split()[3]
+    elif re.search("packets output",i):
+        opackets = i.split()[0]
+        obytes = i.split()[3]
+        iface_list.append([name,ipackets,ibytes,opackets,obytes])
+for i in iface_list:
+    print(i)
