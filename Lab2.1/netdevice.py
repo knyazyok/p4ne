@@ -28,3 +28,10 @@ s = session.recv(BUF_SIZE).decode()
 
 session.close()
 
+print(s)
+out = s.split("\n")
+for i in out:
+    if i[0] != " " and not re.search("show interfaces",i) and re.search("is",i):
+        print(i.split()[0])
+    elif re.search("packets input",i) or re.search("packets output",i):
+        print (i.split()[0]+" "+i.split()[3])
