@@ -27,8 +27,8 @@ s = session.recv(BUF_SIZE).decode()
 
 session.close()
 
-iface_list = [["Name","Input Packets","Input Bytes","Output Packets","Output Bytes"]]
 out = s.split("\n")
+iface_list=[]
 for i in out:
     if i[0] != " " and not re.search("show interfaces",i) and re.search("is",i):
         name = i.split()[0]
@@ -40,5 +40,5 @@ for i in out:
         obytes = i.split()[3]
         iface_list.append([name,ipackets,ibytes,opackets,obytes])
 
-df = pandas.DataFrame(iface_list)
-print(df)
+df = pandas.DataFrame(iface_list,columns=["Name","Input Packets","Input Bytes","Output Packets","Output Bytes"])
+print(df.to_string(index=False))
