@@ -1,4 +1,6 @@
-import paramiko,time,pandas
+import pprint
+
+import paramiko,requests,time,re,pandas
 
 IP = "10.31.70.209"
 REST_IP = "10.31.70.209"
@@ -27,6 +29,7 @@ s = session.recv(BUF_SIZE).decode()
 
 session.close()
 
+print("Paramiko data")
 iface_list = [["Name","Input Packets","Input Bytes","Output Packets","Output Bytes"]]
 out = s.split("\n")
 for i in out:
@@ -45,3 +48,14 @@ for i in out:
 df = pandas.DataFrame(iface_list)
 
 print(df)
+
+print()
+
+print("REST API data")
+headers = {
+    "accept": "application/yang-data+json",
+    "Content-Type": "application/yang-data+json"
+}
+requests.packages.urllib3.disable_warnings()
+r = requests.get("https://" + IP + '/restconf/data/Cisco-IOS-XE-interfaces-oper:interfaces', auth=(LOGIN, PASSWORD), headers=headers, verify=False)
+print(pprint.pprint(r.json())['Cisco-IOS-XE-interfaces-oper:interfaces'])
