@@ -39,9 +39,6 @@ for i in out:
         opackets = i.split()[0]
         obytes = i.split()[3]
         iface_list.append([name,ipackets,ibytes,opackets,obytes])
-#for i in iface_list:
-#    print("\t\t\t\t".join(i))
 
 df = pandas.DataFrame(iface_list)
-
 print(df)
