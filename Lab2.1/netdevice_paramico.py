@@ -40,5 +40,6 @@ for i in out:
         obytes = i.split()[3]
         iface_list.append([name,ipackets,ibytes,opackets,obytes])
 
-df = pandas.DataFrame(iface_list,columns=["Name","Input Packets","Input Bytes","Output Packets","Output Bytes"])
+df = pandas.DataFrame(iface_list,columns=["Name","Input Packets","Input Bytes",\
+                                          "Output Packets","Output Bytes"])
 print(df.to_string(index=False))
