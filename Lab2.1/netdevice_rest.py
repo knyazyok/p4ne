@@ -11,4 +11,5 @@ headers = {
 }
 requests.packages.urllib3.disable_warnings()
 r = requests.get("https://" + IP + '/restconf/data/Cisco-IOS-XE-interfaces-oper:interfaces', auth=(LOGIN, PASSWORD), headers=headers, verify=False)
-print(pprint.pprint(r.json())['Cisco-IOS-XE-interfaces-oper:interfaces'])
+for i in r.json()['Cisco-IOS-XE-interfaces-oper:interfaces']['interface']:
+    print(i['name'])
