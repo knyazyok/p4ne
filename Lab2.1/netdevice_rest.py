@@ -1,10 +1,9 @@
-import paramiko,requests,time,re
+import paramiko,time,pandas
 
-CONSOLE_IP = "10.31.70.209"
-REST_IP = "10.31.70.210"
+IP = "10.31.70.209"
+REST_IP = "10.31.70.209"
 LOGIN = "restapi"
 PASSWORD = "j0sg1280-7@"
-REST_PORT = "55443"
 
 BUF_SIZE = 20000
 TIMEOUT = 1
@@ -12,7 +11,7 @@ TIMEOUT = 1
 ssh_connection = paramiko.SSHClient()
 ssh_connection.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-ssh_connection.connect(CONSOLE_IP, username=LOGIN, password=PASSWORD, look_for_keys=False, allow_agent=False)
+ssh_connection.connect(IP, username=LOGIN, password=PASSWORD, look_for_keys=False, allow_agent=False)
 session = ssh_connection.invoke_shell()
 
 session.send("\n")
@@ -28,7 +27,6 @@ s = session.recv(BUF_SIZE).decode()
 
 session.close()
 
-#print(s)
 iface_list = [["Name","Input Packets","Input Bytes","Output Packets","Output Bytes"]]
 out = s.split("\n")
 for i in out:
@@ -41,5 +39,9 @@ for i in out:
         opackets = i.split()[0]
         obytes = i.split()[3]
         iface_list.append([name,ipackets,ibytes,opackets,obytes])
-for i in iface_list:
-    print(i)
+#for i in iface_list:
+#    print("\t\t\t\t".join(i))
+
+df = pandas.DataFrame(iface_list)
+
+print(df)
