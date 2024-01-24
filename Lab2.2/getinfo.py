@@ -25,11 +25,11 @@ def index():
 
 @app.route('/configs')
 def page1():
-    return '<br>'.join(hosts.keys())
+    return '<br>'.join(sorted(hosts.keys()))
 
 @app.route('/config/<name>')
 def page2(name):
-    return '<br>'.join(hosts[name])
+    return '<br>'.join(sorted(hosts[name]))
 
 
 hosts={}
