@@ -1,5 +1,5 @@
 from flask import Flask
-import glob,re,ipaddress,json
+import glob,re,ipaddress
 
 LOG_PATH="C:\\Users\\utkinia\\Documents\\Python\\config_files"
 
