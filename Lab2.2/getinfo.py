@@ -1,5 +1,4 @@
-from flask import Flask
-import glob,re,ipaddress
+import glob,re,ipaddress,flask
 
 LOG_PATH="C:\\Users\\utkinia\\Documents\\Python\\config_files"
 
@@ -14,7 +13,7 @@ def str_to_ip(ipstr):
     else:
         return None
 
-app = Flask(__name__)
+app = flask.Flask(__name__)
 
 @app.route('/')
 @app.route('/index')
@@ -25,11 +24,11 @@ def index():
 
 @app.route('/configs')
 def page1():
-    return '<br>'.join(sorted(hosts.keys()))
+    return flask.jsonify({'hostnames': sorted(hosts.keys())})
 
 @app.route('/config/<name>')
 def page2(name):
-    return '<br>'.join(sorted(hosts[name]))
+    return flask.jsonify({name: sorted(hosts[name])})
 
 
 hosts={}
