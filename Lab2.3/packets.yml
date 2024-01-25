@@ -1,0 +1,23 @@
+- hosts: fs-ga
+  gather_facts: no
+  tasks:
+    - name: get hostname
+      command: hostname
+      register: host_name
+    - name: get interfaces
+      command: ifconfig -a
+      register: interfaces
+    - name: get interface name
+      set_fact:
+              interface_names: "{{ interfaces['stdout']|regex_findall('([a-zA-Z]+[0-9]*): flags')|join(' ') }}"
+    - name: get packets
+      set_fact:
+        rxpackets: "{{ interfaces['stdout']|regex_findall('RX packets ([0-9]+)')|map('int')|sum }}"
+        txpackets: "{{ interfaces['stdout']|regex_findall('TX packets ([0-9]+)')|map('int')|sum }}"
+    - name: output
+      debug:
+        msg:
+          - " Host: {{ host_name['stdout'] }} "
+          - " Interfaces: {{ interface_names }} "
+          - " Total RX packets: {{ rxpackets }} "
+          - " Total TX packets: {{ txpackets }} "
